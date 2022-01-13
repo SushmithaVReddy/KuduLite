@@ -49,6 +49,7 @@ namespace Kudu.Core.Functions
             
             try
             {
+                Console.WriteLine("SUXXXXXXX Creating TA CRD with details "+secretKeyToKedaParam);
                 CreateTriggerAuthenticationRef(secretKeyToKedaParam, functionName); 
             }
             catch (Exception ex)

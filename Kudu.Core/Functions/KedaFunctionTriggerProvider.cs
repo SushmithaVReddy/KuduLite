@@ -214,11 +214,14 @@ namespace Kudu.Core.Functions
                     scaleTrigger.Metadata = PopulateMetadataDictionary(function.Binding, function.FunctionName);
 
                     IKedaAuthRefProvider authProvider = getTriggerAuthProvider(triggerType);
+                    Console.WriteLine("SUXXXXXXX Triggertype is "+triggerType+ " auth ref provider is "+authProvider.GetType());
                     if (authProvider != null)
                     {
+                        Console.WriteLine("SUXXXXXXX populating auth ref");
                         scaleTrigger.AuthenticationRef = authProvider.PopulateAuthenticationRef(function.Binding, function.FunctionName);
                     }
 
+                    Console.WriteLine("SUXXXXXXX scaleTrigger details "+scaleTrigger);
                     yield return scaleTrigger;
                 }
             }
