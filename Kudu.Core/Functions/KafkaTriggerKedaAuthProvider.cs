@@ -19,8 +19,11 @@ namespace Kudu.Core.Functions
 
             IDictionary<string, string> secretKeyToKedaParam = new Dictionary<string, string>();
 
+            Console.WriteLine("SUXXXXXXX all good till getting function data "+functionData);
+
             //creates the map of secret keys to keda params required for trigger auth
-            if (functionData[TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL] != "NotSet" && functionData[TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE] != "NotSet")
+            if ((functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL) && functionData[TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL] != "NotSet") 
+            && (functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE) && functionData[TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE] != "NotSet"))
             {
                 secretKeyToKedaParam.Add(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE, getKedaProperty(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE));
                 secretKeyToKedaParam.Add(TriggerAuthConstants.KAFKA_TRIGGER_USERNAME, getKedaProperty(TriggerAuthConstants.KAFKA_TRIGGER_USERNAME));
