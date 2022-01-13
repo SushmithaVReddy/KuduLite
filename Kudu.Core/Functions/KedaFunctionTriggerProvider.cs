@@ -214,7 +214,7 @@ namespace Kudu.Core.Functions
                     scaleTrigger.Metadata = PopulateMetadataDictionary(function.Binding, function.FunctionName);
 
                     IKedaAuthRefProvider authProvider = getTriggerAuthProvider(triggerType);
-                    Console.WriteLine("SUXXXXXXX Triggertype is "+triggerType+ " auth ref provider is "+authProvider.GetType());
+                    Console.WriteLine("SUXXXXXXX Triggertype is "+triggerType);// " auth ref provider is "+authProvider.GetType());
                     if (authProvider != null)
                     {
                         Console.WriteLine("SUXXXXXXX populating auth ref");
@@ -229,7 +229,8 @@ namespace Kudu.Core.Functions
 
         internal static IKedaAuthRefProvider getTriggerAuthProvider(string triggerType)
         {
-            if (string.Equals(triggerType, TriggerTypes.Kafka, StringComparison.OrdinalIgnoreCase)) {
+            if (string.Equals(triggerType, TriggerTypes.Kafka, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(triggerType, "kafka", StringComparison.OrdinalIgnoreCase)) {
                 return new KafkaTriggerKedaAuthProvider();
             }
             return null;
