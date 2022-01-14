@@ -25,8 +25,9 @@ namespace Kudu.Core.Functions
             // if ((functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL) && functionData[TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL] != "NotSet") 
             // && (functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE) && functionData[TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE] != "NotSet"))
 
-             if (functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL)  
-                     && functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE))
+            //  if (functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_PROTOCOL)  
+            //          && functionData.ContainsKey(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE))
+            if (true)
             {
                 secretKeyToKedaParam.Add(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE, getKedaProperty(TriggerAuthConstants.KAFKA_TRIGGER_AUTH_MODE));
                 secretKeyToKedaParam.Add(TriggerAuthConstants.KAFKA_TRIGGER_USERNAME, getKedaProperty(TriggerAuthConstants.KAFKA_TRIGGER_USERNAME));
@@ -52,7 +53,9 @@ namespace Kudu.Core.Functions
             IDictionary<string, string> authRef = new Dictionary<string, string>();
             authRef.Add(TriggerAuthConstants.TRIGGER_AUTH_REF_NAME_KEY, functionName);
 
-            
+
+            Console.WriteLine("SUXXXXXXX secret key param data as below");
+            secretKeyToKedaParam.Select(i => $"{i.Key}: {i.Value}").ToList().ForEach(Console.WriteLine);
             try
             {
                 Console.WriteLine("SUXXXXXXX Creating TA CRD with details "+secretKeyToKedaParam.ToString());
@@ -71,8 +74,6 @@ namespace Kudu.Core.Functions
         internal virtual void CreateTriggerAuthenticationRef(IDictionary<string, string> secretKeyToKedaParam, string functionName)
         {
             string secretKeyToKedaParamMap = System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(JsonConvert.SerializeObject(secretKeyToKedaParam)));
-
-            Console.WriteLine("secretKeyToKedaParamMap is "+secretKeyToKedaParamMap);
             // functionName + "-secrets" is the filename for appsettings secrets
             K8SEDeploymentHelper.CreateTriggerAuthenticationRef(functionName + "-secrets", secretKeyToKedaParamMap, functionName);
         }
