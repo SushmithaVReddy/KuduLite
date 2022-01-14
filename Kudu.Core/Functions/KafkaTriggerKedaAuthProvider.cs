@@ -52,11 +52,12 @@ namespace Kudu.Core.Functions
             
             try
             {
-                Console.WriteLine("SUXXXXXXX Creating TA CRD with details "+secretKeyToKedaParam);
+                Console.WriteLine("SUXXXXXXX Creating TA CRD with details "+secretKeyToKedaParam.ToString());
                 CreateTriggerAuthenticationRef(secretKeyToKedaParam, functionName); 
             }
             catch (Exception ex)
             {
+                Console.WriteLine("TA Creation exception "+ ex.InnerException);
                 Console.WriteLine("Error while creating Trigger Authentication Ref, function name : {0} ", functionName, ex.ToString());
                 return null;
             }
@@ -68,6 +69,7 @@ namespace Kudu.Core.Functions
         {
             string secretKeyToKedaParamMap = System.Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(JsonConvert.SerializeObject(secretKeyToKedaParam)));
 
+            Console.WriteLine("secretKeyToKedaParamMap is "+secretKeyToKedaParamMap);
             // functionName + "-secrets" is the filename for appsettings secrets
             K8SEDeploymentHelper.CreateTriggerAuthenticationRef(functionName + "-secrets", secretKeyToKedaParamMap, functionName);
         }

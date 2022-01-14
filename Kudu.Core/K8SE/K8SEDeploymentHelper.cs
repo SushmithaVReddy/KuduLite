@@ -162,6 +162,7 @@ namespace Kudu.Core.K8SE
             }
             else
             {
+                Console.WriteLine("error in buidctl command : "+error);
                 throw new Exception(error);
             }
         }
