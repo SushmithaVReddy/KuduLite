@@ -15,7 +15,7 @@ namespace Kudu.Core.Functions
         {
             IDictionary<string, string> functionData = bindings.ToObject<Dictionary<string, JToken>>()
                 .Where(i => i.Value.Type == JTokenType.String)
-                .ToDictionary(k => k.Key, v => v.Value.ToString());
+                .ToDictionary(k => k.Key.ToLower(), v => v.Value.ToString());
 
             IDictionary<string, string> secretKeyToKedaParam = new Dictionary<string, string>();
 
